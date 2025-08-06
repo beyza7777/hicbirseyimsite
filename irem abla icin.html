@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐹</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #fce4ec;
+            overflow: hidden;
+            margin: 0;
+        }
+        .container {
+            position: relative;
+            width: 250px;
+            height: 180px;
+            cursor: pointer;
+            transition: opacity 1s ease-in-out;
+        }
+        .envelope {
+            width: 250px;
+            height: 180px;
+            background-color: pink;
+            position: absolute;
+            bottom: 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .flap {
+            width: 250px;
+            height: 120px;
+            background-color: red;
+            position: absolute;
+            top: 0;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transition: transform 0.5s;
+            transform-origin: top;
+            z-index: 3;
+        }
+        .card {
+            width: 220px;
+            height: 120px;
+            background-color: rgb(255, 255, 255);
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s ease-in-out;
+            z-index: 2;
+        }
+        .hamster {
+            width: 80px;
+            position: absolute;
+            bottom: 0;
+            transition: transform 1s ease-in-out;
+            z-index: 3;
+        }
+        .hamster.left {
+            left: 0.5%;
+            transform: translateY(200%);
+        }
+        .hamster.right {
+            right: 0.5%;
+            transform: translateY(200%);
+        }
+        .container.open .flap {
+            transform: rotateX(180deg);
+        }
+        .container.open .card {
+            transform: translateX(-50%) translateY(-40px);
+        }
+        .container.open .hamster.left {
+            transform: translateY(-40px);
+        }
+        .container.open .hamster.right {
+            transform: translateY(-40px);
+        }
+        /* Devam Et Butonu */
+        .continue-btn {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .container.open + .continue-btn {
+            display: block;
+        }
+        /* GIF ve Yazı */
+        .gif-container {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        .gif-container img {
+            width: 200px;
+            height: auto;
+        }
+        .message {
+            font-size: 20px;
+            font-weight: bold;
+            color: black;
+            margin-top: 10px;
+        }
+        /* Çiçek Animasyonu */
+        .flower {
+            position: absolute;
+            top: -100px;
+            width: 50px;
+            height: 50px;
+            animation: fall 5s linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        /* Kayarak Gelen Yazı */
+        .welcome-text {
+            position: absolute;
+            top: 50%; /* Yazıyı ekranın ortasında başlatıyoruz */
+            left: -100%; /* Yazı başlangıçta ekranın dışında */
+            transform: translateY(-50%);
+            font-size: 40px;
+            font-weight: bold;
+            color: black;
+            white-space: nowrap;
+            animation: slideOut 13s forwards; /* Yazının kayma süresi 8 saniye olarak ayarlandı */
+            z-index: 4; /* Yazıyı zarfın önüne getirebilmek için z-index'i artırdık */
+        }
+        @keyframes slideOut {
+            0% { left: -100%; opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+        /* TIKLA Yazısı ve Ok */
+        .click-container {
+            position: absolute;
+            bottom: 100px; /* TIKLA yazısını zarfın hemen altına yerleştiriyoruz */
+            left: 48%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+            animation: bounce 1s infinite alternate;
+            z-index: 5; /* TIKLA yazısının zarfın önünde olmasını sağlıyoruz */
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Kayarak Gelen Yazı -->
+    <div class="welcome-text">EN TATLI SABAHLAR BEYZA ILE BAŞLAR ☀️</div>
+
+    <!-- TIKLA Yazısı ve Ok -->
+    <div class="click-container">
+        <div class="click-text">TIKLA</div>
+        <div class="click-arrow">⬆️</div>
+    </div>
+
+    <div class="container" onclick="toggleEnvelope()">
+        <div class="flap"></div>
+        <div class="envelope">
+            <div class="card">Günaydınnnnn.
+Bugün umarım kimsenin seni üzmediği ve çok güzel geçireceğin bir gün olur hiçbirşeyim :)🫶🏻</div>
+            <img src="bebiss.png" class="hamster left" alt="Hamster">
+            <img src="bebiss.png" class="hamster right" alt="Hamster">
+        </div>
+    </div>
+    <button class="continue-btn" onclick="showGif()">Devam Et</button>
+
+    <!-- GIF ve Yazı -->
+    <div class="gif-container">
+        <img src="bunny-cute.gif" alt="Gülümseyen Çiçek">
+        <div class="message">Birde unutmadan bütün bu çiçekler senin için ablaa🌸🌼🌺</div>
+    </div>
+
+    <script>
+        // Sayfa yüklendiğinde kayarak gelen yazıyı hemen göster
+        window.onload = function() {
+            document.querySelector('.welcome-text').style.animationPlayState = 'running';
+        }
+
+        function toggleEnvelope() {
+            document.querySelector('.container').classList.toggle('open');
+            document.querySelector('.click-container').style.display = 'none'; // Tıkla yazısını ve oku kaldır
+        }
+
+        function showGif() {
+            let envelope = document.querySelector('.container');
+            envelope.style.opacity = '0'; // Yavaşça kaybolmasını sağlar
+            setTimeout(() => {
+                envelope.style.display = 'none'; // Tamamen gizler
+            }, 500);
+
+            document.querySelector('.gif-container').style.display = 'block';
+            document.querySelector('.continue-btn').style.display = 'none';
+
+            for (let i = 0; i < 10; i++) {
+                let flower = document.createElement('img');
+                flower.src = 'cicekler.png';  // Kendi çiçek görselini koy
+                flower.className = 'flower';
+                flower.style.left = Math.random() * window.innerWidth + 'px';
+                flower.style.animationDuration = (Math.random() * 2 + 3) + 's'; // 3-5 saniye arası süzülme süresi
+                document.body.appendChild(flower);
+
+                setTimeout(() => {
+                    flower.remove();
+                }, 1000000); // Çiçekleri uzun süre tutar
+            }
+        }
+    </script>
+</body>
+</html>
